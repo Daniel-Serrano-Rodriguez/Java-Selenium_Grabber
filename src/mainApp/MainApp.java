@@ -15,7 +15,7 @@ public class MainApp {
 		BufferedReader br;
 		String linea;
 		List<String> urls = new ArrayList<>();
-		int urlCount = 0;
+		int urlCount = 0, safeThreadCount = 2, threadsUsed = 0;
 		File source = new File(args[0]);
 
 		try {
@@ -35,10 +35,39 @@ public class MainApp {
 			}
 
 			for (int i = 0; i < urlCount; i++) {
-				hilos[i].start();
-				Thread.sleep(10000);
-				if (i % 5 == 0 && i != 0)
-					Thread.sleep(30000);
+				if (threadsUsed < safeThreadCount - 1) {
+					System.out.println("Enlace: " + (i + 1));
+					hilos[i].start();
+					threadsUsed++;
+					System.out.println("Hilos usados: " + threadsUsed + " de " + safeThreadCount);
+
+					for (int j = 0; j < i; j++) {
+						if (hilos[j] != null) {
+							if (!hilos[j].isAlive()) {
+								System.out.println("Hilo disponible!");
+								threadsUsed--;
+								hilos[j] = null;
+							}
+						}
+					}
+
+					Thread.sleep(5000);
+				} else {
+					System.out.println("heeeooo");
+					for (int j = 0 + i; j <= threadsUsed + i; j++) {
+						if (!hilos[j].isAlive()) {
+							System.out.println("Hilo disponible!");
+							threadsUsed--;
+						}
+					}
+
+					if (threadsUsed >= safeThreadCount - 1) {
+						System.out.println("Esperando 10 segundos para liberar hilo.");
+						Thread.sleep(10000);
+					}
+
+					urlCount--;
+				}
 			}
 
 		} catch (IOException | InterruptedException e) {

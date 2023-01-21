@@ -41,7 +41,7 @@ public class Grabber extends Thread {
 		testprofile.setPreference("browser.download.dir", fileFolder.getAbsolutePath());
 		FirefoxOptions fo = new FirefoxOptions();
 		fo.setProfile(testprofile);
-//		fo.setHeadless(true);
+		fo.setHeadless(true);
 		fo.setLogLevel(FirefoxDriverLogLevel.FATAL);
 
 		WebDriver driver = new FirefoxDriver(fo);
