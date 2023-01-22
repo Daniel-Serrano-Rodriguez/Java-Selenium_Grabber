@@ -52,7 +52,6 @@ public class Grabber extends Thread {
 			outFolder.mkdirs();
 
 		driver.get("https://www.savethevideo.com/es/home");
-		System.out.println("Enlace: " + url);
 
 		try {
 
