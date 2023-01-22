@@ -55,7 +55,6 @@ public class MainApp {
 
 					System.out.println((safeThreadCount - threadsUsed) + " hilos disponibles");
 					System.out.println("Enlace " + urlsPassed + ": " + urls.get(urlsPassed - 1));
-//					System.out.println("Hilos usados: " + threadsUsed + " de " + safeThreadCount);
 
 					Thread.sleep(5000);
 				} else {
@@ -75,44 +74,7 @@ public class MainApp {
 
 				if (urlsPassed == urlCount - 1)
 					complete = true;
-
 			}
-
-//			for (int i = 0; i < urlCount; i++) {
-//				if (threadsUsed < safeThreadCount - 1) {
-//					System.out.println("Enlace: " + (i + 1));
-//					hilos[i].start();
-//					threadsUsed++;
-//					System.out.println("Hilos usados: " + threadsUsed + " de " + safeThreadCount);
-//
-//					for (int j = 0; j < i; j++) {
-//						if (hilos[j] != null) {
-//							if (!hilos[j].isAlive()) {
-//								System.out.println("Hilo disponible!");
-//								threadsUsed--;
-//								hilos[j] = null;
-//							}
-//						}
-//					}
-//
-//					Thread.sleep(5000);
-//				} else {
-//					System.out.println("heeeooo");
-//					for (int j = 0 + i; j <= threadsUsed + i; j++) {
-//						if (!hilos[j].isAlive()) {
-//							System.out.println("Hilo disponible!");
-//							threadsUsed--;
-//						}
-//					}
-//
-//					if (threadsUsed >= safeThreadCount - 1) {
-//						System.out.println("Esperando 10 segundos para liberar hilo.");
-//						Thread.sleep(10000);
-//					}
-//
-//					urlCount--;
-//				}
-//			}
 
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
