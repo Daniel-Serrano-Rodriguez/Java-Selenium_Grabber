@@ -1,6 +1,6 @@
  # Grabber
 
- Simple project to download videos.
+ Simple project to download videos. YT not available yet.
 
  ## Must
 
