@@ -10,13 +10,10 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.ProfilesIni;
 
 import com.google.common.io.Files;
+
+import models.FFDriver;
 
 public class Grabber extends Thread {
 	private String url, outputFolder;
@@ -32,21 +29,13 @@ public class Grabber extends Thread {
 
 	@Override
 	public void run() {
+		String selectorCssButtonUrl = "#gatsby-focus-wrapper > main > section:nth-child(1) > div > div.sm\\:text-center.md\\:max-w-2xl.md\\:mx-auto.lg\\:mx-0.lg\\:col-span-8.lg\\:text-left > div.mt-8.sm\\:mx-auto.sm\\:text-center.lg\\:mx-0.lg\\:text-left > form > button";
 		boolean prepared = false, cached = false, downloaded = false;
 		File outFolder = new File(outputFolder), fileFolder = new File(outputFolder + "/" + threadNumber);
 		String[] files;
 
-		ProfilesIni profile = new ProfilesIni();
-		FirefoxProfile testprofile = profile.getProfile("selenium");
-		testprofile.setPreference("browser.download.dir", fileFolder.getAbsolutePath());
-		FirefoxOptions fo = new FirefoxOptions();
-		fo.setProfile(testprofile);
-		fo.setHeadless(true);
-		fo.setLogLevel(FirefoxDriverLogLevel.FATAL);
-
-		WebDriver driver = new FirefoxDriver(fo);
+		WebDriver driver = new FFDriver(fileFolder.getAbsolutePath()).getWebDriver();
 		WebElement txfUrl, btnUrl, btnDownload, txtDownloadProcess;
-		String selectorCssButtonUrl = "#gatsby-focus-wrapper > main > section:nth-child(1) > div > div.sm\\:text-center.md\\:max-w-2xl.md\\:mx-auto.lg\\:mx-0.lg\\:col-span-8.lg\\:text-left > div.mt-8.sm\\:mx-auto.sm\\:text-center.lg\\:mx-0.lg\\:text-left > form > button";
 
 		if (!outFolder.exists())
 			outFolder.mkdirs();
