@@ -10,6 +10,22 @@ import java.util.List;
 import utils.Grabber;
 
 public class MainApp {
+
+	/*
+	 * TODO Add selenium entry in profiles.ini. Folders:
+	 * 
+	 * %APPDATA%/Roaming/Mozilla/Firefox for windows
+	 * 
+	 * $HOME/.mozilla/firefox for linux
+	 * 
+	 * [Profile69]
+	 * 
+	 * Name=selenium
+	 * 
+	 * IsRelative=0
+	 * 
+	 * Path=6wr009zz.selenium
+	 */
 	public static void main(String[] args) {
 		Thread[] hilos;
 		BufferedReader br;
@@ -19,10 +35,13 @@ public class MainApp {
 		File source = new File(args[0]);
 		boolean complete = false;
 
-		if (safeThreadCount % 4 == 0)
-			safeThreadCount = safeThreadCount / 4;
-		else if (safeThreadCount % 3 == 0)
-			safeThreadCount = safeThreadCount / 3;
+		if (safeThreadCount > 4) {
+			if (safeThreadCount % 4 == 0)
+				safeThreadCount = safeThreadCount / 4;
+			else if (safeThreadCount % 3 == 0)
+				safeThreadCount = safeThreadCount / 3;
+		} else
+			safeThreadCount = 1;
 
 		try {
 			br = new BufferedReader(new FileReader(source));

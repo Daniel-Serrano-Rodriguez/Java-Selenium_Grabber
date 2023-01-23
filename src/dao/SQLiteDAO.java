@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,15 +9,14 @@ public class SQLiteDAO {
 
 	private Connection conn;
 
-	private SQLiteDAO() {
+	public SQLiteDAO() throws SQLException {
+		File file = new File("db");
+		String url = "jdbc:sqlite://" + file.getAbsolutePath();
+
+		conn = DriverManager.getConnection(url);
 	}
 
 	public Connection getConn() throws SQLException {
-		String url = "db/ddbb.db";
-
-		if (conn == null)
-			conn = DriverManager.getConnection(url);
-
 		return conn;
 	}
 

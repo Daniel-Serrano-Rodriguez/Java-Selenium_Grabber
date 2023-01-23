@@ -2,21 +2,31 @@ package models;
 
 public class Generales {
 
-	private long id;
-
 	private String url;
 
-	private boolean downloaded;
+	private int downloaded;
 
-	public Generales(long id, String url, boolean downloaded) {
+	/**
+	 * Creates a general video
+	 * 
+	 * @param url        String
+	 * @param downloaded boolean
+	 */
+	public Generales(String url, int downloaded) {
 		super();
-		this.id = id;
 		this.url = url;
 		this.downloaded = downloaded;
 	}
 
-	public long getId() {
-		return id;
+	/**
+	 * Creates a general video that is not downloaded
+	 * 
+	 * @param url String
+	 */
+	public Generales(String url) {
+		super();
+		this.url = url;
+		downloaded = 0;
 	}
 
 	public String getUrl() {
@@ -24,7 +34,7 @@ public class Generales {
 	}
 
 	public boolean isDownloaded() {
-		return downloaded;
+		return downloaded == 0;
 	}
 
 }
