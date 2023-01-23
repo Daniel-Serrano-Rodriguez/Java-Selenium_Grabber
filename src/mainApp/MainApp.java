@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.Grabber;
+import utils.Profiler;
 
 public class MainApp {
 
@@ -44,6 +45,8 @@ public class MainApp {
 			safeThreadCount = 1;
 
 		try {
+			Profiler.writeProfile();
+
 			br = new BufferedReader(new FileReader(source));
 
 			while ((linea = br.readLine()) != null)
@@ -94,6 +97,8 @@ public class MainApp {
 				if (urlsPassed == urlCount - 1)
 					complete = true;
 			}
+
+			Profiler.removeProfile();
 
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();

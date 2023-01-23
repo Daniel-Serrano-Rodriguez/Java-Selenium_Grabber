@@ -33,8 +33,9 @@ public class Grabber extends Thread {
 		boolean prepared = false, cached = false, downloaded = false;
 		File outFolder = new File(outputFolder), fileFolder = new File(outputFolder + "/" + threadNumber);
 		String[] files;
+		FFDriver ffDriver = new FFDriver(fileFolder.getAbsolutePath());
 
-		WebDriver driver = new FFDriver(fileFolder.getAbsolutePath()).getWebDriver();
+		WebDriver driver = ffDriver.getWebDriver();
 		WebElement txfUrl, btnUrl, btnDownload, txtDownloadProcess;
 
 		if (!outFolder.exists())
@@ -123,7 +124,7 @@ public class Grabber extends Thread {
 			errors.add("Don't know fam");
 		}
 
-		driver.quit();
+		driver.close();
 
 		try {
 			if (errors.size() > 0)
