@@ -15,7 +15,7 @@ import org.openqa.selenium.firefox.ProfilesIni;
 
 public class Profiler {
 
-	private static final String profileName = "0aqy6coi.selenium-profile";
+	private static final String profileName = "web/0aqy6coi.selenium-profile";
 	private static String profileIniLocation, pilBackup;
 	private static int profileCount = 0;
 
@@ -64,7 +64,7 @@ public class Profiler {
 		FirefoxProfile testprofile = profile.getProfile("selenium-profile");
 		testprofile.setPreference("browser.download.dir", path);
 		testprofile.setPreference("browser.download.folderList", 2);
-		testprofile.addExtension(new File("uBlock0_1.46.1b8.firefox.signed.xpi"));
+		testprofile.addExtension(new File("web/uBlock0_1.46.1b8.firefox.signed.xpi"));
 		FirefoxOptions fOptions = new FirefoxOptions();
 		fOptions.setProfile(testprofile);
 		fOptions.setHeadless(true);
