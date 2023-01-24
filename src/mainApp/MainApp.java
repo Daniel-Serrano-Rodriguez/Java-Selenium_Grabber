@@ -32,9 +32,9 @@ public class MainApp {
 		BufferedReader br;
 		String linea;
 		List<String> urls = new ArrayList<>();
-		int urlCount = 0, urlsPassed = 0, safeThreadCount = Runtime.getRuntime().availableProcessors(), threadsUsed = 0;
+		int urlCount, urlsPassed = 0, safeThreadCount = Runtime.getRuntime().availableProcessors(), threadsUsed = 0;
 		File source = new File(args[0]);
-		boolean complete = false;
+		boolean complete = false, finished = false;
 
 		if (safeThreadCount > 4) {
 			if (safeThreadCount % 4 == 0)
@@ -50,11 +50,12 @@ public class MainApp {
 			br = new BufferedReader(new FileReader(source));
 
 			while ((linea = br.readLine()) != null)
-				if (!linea.isBlank()) {
+				if (!linea.isBlank() && !linea.isEmpty()) {
 					urls.add(linea);
-					urlCount++;
 				}
 			br.close();
+
+			urlCount = urls.size();
 
 			hilos = new Thread[urlCount];
 
@@ -86,6 +87,7 @@ public class MainApp {
 								threadsUsed--;
 								hilos[i] = null;
 							}
+
 					if (threadsUsed < safeThreadCount)
 						System.out.println((safeThreadCount - threadsUsed) + " hilos disponibles");
 					else {
@@ -94,8 +96,25 @@ public class MainApp {
 					}
 				}
 
-				if (urlsPassed == urlCount - 1)
+				if (urlsPassed == urlCount)
 					complete = true;
+			}
+
+			while (!finished) {
+				int finishedUrl = 0;
+				for (int i = 0; i < urlCount; i++) {
+					if (hilos[i] != null) {
+						if (!hilos[i].isAlive()) {
+							hilos[i] = null;
+						}
+					} else
+						finishedUrl++;
+				}
+
+				if (finishedUrl == urlCount)
+					finished = true;
+				else
+					Thread.sleep(5000);
 			}
 
 			Profiler.removeProfile();

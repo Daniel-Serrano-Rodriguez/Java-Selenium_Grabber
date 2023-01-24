@@ -53,6 +53,7 @@ public class Grabber extends Thread {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					errors.add("Adding letters to url textfield");
+					driver.quit();
 				}
 
 				txfUrl.sendKeys(url.charAt(i) + "");
@@ -64,7 +65,7 @@ public class Grabber extends Thread {
 			while (!prepared)
 				try {
 					try {
-						Thread.sleep(100);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 						errors.add("Waiting for download availability");
@@ -83,6 +84,7 @@ public class Grabber extends Thread {
 				try {
 					if (!txtDownloadProcess.getText().matches(".*(A partir|%).*"))
 						cached = true;
+					Thread.sleep(1000);
 				} catch (Exception e) {
 					cached = true;
 				}
@@ -103,12 +105,8 @@ public class Grabber extends Thread {
 						finished = false;
 				}
 
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					errors.add("Waiting for partial files");
-				}
+				if (!finished)
+					Thread.sleep(1000);
 
 				downloaded = finished;
 
@@ -122,9 +120,10 @@ public class Grabber extends Thread {
 		} catch (Exception e) {
 			e.printStackTrace();
 			errors.add("Don't know fam");
+			driver.quit();
 		}
 
-		driver.close();
+		driver.quit();
 
 		try {
 			if (errors.size() > 0)
@@ -146,6 +145,7 @@ public class Grabber extends Thread {
 				e1.getStackTrace();
 				errors.add("Error waiting for element");
 			}
+
 			element = findElement(driver, by);
 		}
 
